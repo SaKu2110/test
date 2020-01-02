@@ -1,19 +1,16 @@
 package controller
 
 import(
-	"fmt"
 	"net/http"
 	"github.com/gin-gonic/gin"
-	/* gorm のテストは後回し
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	*/
 	"github.com/SaKu2110/test/model"
 	"github.com/SaKu2110/test/service"
 )
 
 type IsController struct {
-	// DB	*gorm.DB
+	DB	*gorm.DB
 }
 
 func (ctrl *IsController)SignInHandler(context *gin.Context){
@@ -41,11 +38,7 @@ func (ctrl *IsController)SignInHandler(context *gin.Context){
 		return
 	}
 
-	// ctrl.DB..Table("users").Find(&user, "id=?", request.ID)
-	// test cade without gorm
-	user.ID = "SaKu_2018"
-	user.PASSWORD = "hogehoge"
-	user.ADMIN = "admin"
+	ctrl.DB.Table("users").Find(&user, "id=?", request.ID)
 
 	if user.ID == "" {
 		context.JSON(http.StatusInternalServerError, gin.H{
@@ -64,7 +57,7 @@ func (ctrl *IsController)SignInHandler(context *gin.Context){
 		return
 	}
 
-	token, err = CreateUserToken(&user)
+	token, err = service.CreateUserToken(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"status": false,

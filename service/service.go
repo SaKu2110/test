@@ -1,6 +1,7 @@
 package service
 
 import(
+	"os"
 	"fmt"
 	"time"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -18,7 +19,7 @@ func CheckRequestValue(request model.LoginRequest) error {
 	return nil
 }
 
-func CreateUserToken(user model.User) string, error {
+func CreateUserToken(user model.User) (string, error) {
 	token := jwt.New(jwt.SigningMethodRS256)
 
 	claims := token.Claims.(jwt.MapClaims)
@@ -26,7 +27,7 @@ func CreateUserToken(user model.User) string, error {
 	claims["admin"] = user.ADMIN
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
-	stringToken, err := token.SignedString(signKey)
+	stringToken, err := token.SignedString([]byte(os.Getenv("SIGNINGKEY")))
 	if err != nil {
 		return "", err
 	}
