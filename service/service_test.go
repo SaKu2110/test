@@ -47,7 +47,7 @@ func TestCreateUserTokenSuccess(t *testing.T) {
 	user := model.User{
 		ID: "000000",
 		PASSWORD: "password",
-		ADMIN: true,
+		ROLE: "admin",
 	}
 
     token, err := CreateUserToken(user)
