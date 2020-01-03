@@ -25,7 +25,7 @@ func CreateUserToken(user model.User) (string, error) {
 
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = user.ID
-	claims["admin"] = user.ADMIN
+	claims["role"] = user.ROLE
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	stringToken, err := token.SignedString([]byte(secretKey))
