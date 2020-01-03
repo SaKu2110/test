@@ -8,5 +8,5 @@ type LoginRequest struct {
 type User struct {
 	ID			string
 	PASSWORD	string
-	ADMIN		string
+	ADMIN		bool
 }

@@ -1,12 +1,13 @@
 package service
 
 import(
-	"os"
 	"fmt"
 	"time"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/SaKu2110/test/model"
 )
+
+var secretKey = "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177d5ef21cb50cfadcccb20aeb730487c11e09ee4dbbb02387242ef264e74cbee97213"
 
 func CheckRequestValue(request model.LoginRequest) error {
 	if request.ID == "" {
@@ -20,14 +21,14 @@ func CheckRequestValue(request model.LoginRequest) error {
 }
 
 func CreateUserToken(user model.User) (string, error) {
-	token := jwt.New(jwt.SigningMethodRS256)
+	token := jwt.New(jwt.GetSigningMethod("HS256"))
 
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = user.ID
 	claims["admin"] = user.ADMIN
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
-	stringToken, err := token.SignedString([]byte(os.Getenv("SIGNINGKEY")))
+	stringToken, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		return "", err
 	}

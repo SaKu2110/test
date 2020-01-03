@@ -40,3 +40,19 @@ func TestCheckRequestValueFaildPASSWORDVale(t *testing.T) {
         t.Fatalf("failed test %#v", err)
     }
 }
+
+func TestCreateUserTokenSuccess(t *testing.T) {
+	user := model.User{
+		ID: "000000",
+		PASSWORD: "password",
+		ADMIN: true,
+	}
+
+    token, err := CreateUserToken(user)
+    if err != nil {
+        t.Fatalf("failed test %#v", err)
+	}
+	if token == "" {
+		t.Fatalf("failed test %#v", err)
+	}
+}
