@@ -36,7 +36,9 @@ func InitializeDBMoc() (*gorm.DB, sqlmock.Sqlmock, error){
     return gdb, mock, nil
 }
 
-// テストケース 1 成功
+/** controller test 1 success
+ * リクエストが正しい
+ */
 func TestSignInHandlerSuccess(t *testing.T) {
     // create db mock
     db, mock, err := InitializeDBMoc()
@@ -75,7 +77,7 @@ func TestSignInHandlerSuccess(t *testing.T) {
     fmt.Println(recorder.Body.String())
 }
 
-/** 失敗ケース 2
+/** controller test 2 faild
  * user idが入力されていないためエラー
  */
 func TestFaildIDValue(t *testing.T) {
@@ -116,7 +118,7 @@ func TestFaildIDValue(t *testing.T) {
     fmt.Println(recorder.Body.String())
 }
 
-/** 失敗ケース 3
+/** controller test 3 faild
  * user passwordが入力されていないためエラー
  */
 func TestFaildPasswordValue(t *testing.T) {
@@ -157,7 +159,7 @@ func TestFaildPasswordValue(t *testing.T) {
     fmt.Println(recorder.Body.String())
 }
 
-/** 失敗ケース 4
+/** controller test 4 faild
  * user idがdb内に存在しなかった
  */
 func TestFaildNonexistentId(t *testing.T) {
@@ -198,7 +200,7 @@ func TestFaildNonexistentId(t *testing.T) {
     fmt.Println(recorder.Body.String())
 }
 
-/** 失敗ケース 5
+/** controller test 5 faild
  * user passwordがdb内に存在するものと異なる
  */
  func TestFaildWrongPassword(t *testing.T) {
