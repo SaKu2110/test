@@ -41,6 +41,8 @@ func TestCheckRequestValueFaildPASSWORDVale(t *testing.T) {
     }
 }
 
+//　構造体userの中身が存在することはcontroller.goの41 ~ 58行目で保証されているので
+//  tokenが正常に発行されているのかを確かめるテストケースのみを作成した.
 func TestCreateUserTokenSuccess(t *testing.T) {
 	user := model.User{
 		ID: "000000",
